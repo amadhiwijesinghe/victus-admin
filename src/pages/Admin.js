@@ -28,7 +28,7 @@ function Admin() {
             navigate("/");
         }
         });
-    }, []);
+    },  [navigate]);
 
   const totalOrders = orders.length;
 
