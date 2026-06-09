@@ -253,61 +253,87 @@ return (
             {p.description}
           </p>
 
-          <div style={{ display: "flex", gap: "5px" }}>
+          <div style={{ display: "flex", gap: "8px", marginTop: "10px" }}>
             {p.colors?.map((c, i) => (
-                <div
+              <img
                 key={i}
+                src={c}
+                alt=""
                 style={{
-                    width: "12px",
-                    height: "12px",
-                    borderRadius: "50%",
-                    background: c,
-                    backgroundSize: "cover",
-                    border: "1px solid #fff"
+                  width: "22px",
+                  height: "22px",
+                  borderRadius: "50%",
+                  border: "2px solid #fff",
+                  objectFit: "cover"
                 }}
-                />
+              />
             ))}
-            </div>
+          </div>
 
-          <button
+          <div
             style={{
-                display: "flex",
-                marginRight: "10px",
-                padding: "6px 10px",
-                borderRadius: "6px",
+              display: "flex",
+              gap: "10px",
+              marginTop: "15px"
+            }}
+          >
+            <button
+              style={{
+                flex: 1,
+                padding: "10px",
+                borderRadius: "10px",
                 border: "none",
                 background: "#ffaa00",
                 color: "#000",
+                fontWeight: "bold",
                 cursor: "pointer"
-            }}
-            onClick={() => {
+              }}
+              onClick={() => {
                 setEditId(p.id);
                 setName(p.name);
                 setPrice(p.price);
                 setImage(p.image);
                 setDescription(p.description || "");
                 setColors(p.colors?.join(",") || "");
-            }}
+              }}
             >
-            Edit
+              ✏️ Edit
             </button>
 
-          <button onClick={async () => {
-           const token = localStorage.getItem("token");
+            <button
+              style={{
+                flex: 1,
+                padding: "10px",
+                borderRadius: "10px",
+                border: "none",
+                background: "#ff4d4d",
+                color: "#fff",
+                fontWeight: "bold",
+                cursor: "pointer"
+              }}
+              onClick={async () => {
+                const token = localStorage.getItem("token");
 
-            await axios.delete(
-            `https://victus-production.up.railway.app/products/${p.id}`,
-            {
-                headers: {
-                Authorization: token
+                if (!window.confirm(`Delete "${p.name}"?`)) {
+                  return;
                 }
-            }
-            );
-            setProducts(products.filter(x => x.id !== p.id));
-          }}>
-            Delete
-          </button>
-        </div>
+
+                await axios.delete(
+                  `https://victus-production.up.railway.app/products/${p.id}`,
+                  {
+                    headers: {
+                      Authorization: token
+                    }
+                  }
+                );
+
+                setProducts(products.filter(x => x.id !== p.id));
+              }}
+            >
+              🗑 Delete
+            </button>
+          </div>
+          </div>
       ))}
       </div>
     </div>
