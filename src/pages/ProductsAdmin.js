@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function ProductsAdmin() {
+
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
@@ -102,11 +105,28 @@ const addProduct = async () => {
     cursor: "pointer"
     };
 
-  return (
-    <div style={{ padding: "40px", color: "#fff", background: "#000" }}>
-      <h1>Manage Products</h1>
 
-      {/* CREATE */}
+return (
+  <div style={{ padding: "40px", color: "#fff", background: "#000" }}>
+    <h1>Manage Products</h1>
+
+    <div style={{ marginBottom: "20px" }}>
+      <button
+        onClick={() => navigate("/dashboard")}
+        style={{
+          padding: "10px 16px",
+          border: "none",
+          borderRadius: "8px",
+          background: "#00aaff",
+          color: "#fff",
+          cursor: "pointer"
+        }}
+      >
+        ← Back to Dashboard
+      </button>
+    </div>
+
+    {/* CREATE */}
     <div style={{
         maxWidth: "700px",
         marginBottom: "30px",

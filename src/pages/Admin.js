@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Admin() {
+
+  const navigate = useNavigate(); 
 
   const [orders, setOrders] = useState([]);
 
@@ -17,7 +20,14 @@ function Admin() {
         }
     )
     .then(res => setOrders(res.data))
-    .catch(err => console.log(err));
+    .catch(err => {
+        console.log(err);
+
+        if (err.response?.status === 403) {
+            localStorage.removeItem("token");
+            navigate("/");
+        }
+        });
     }, []);
 
   const totalOrders = orders.length;
@@ -68,14 +78,55 @@ function Admin() {
       Admin Dashboard
     </h1>
 
+    <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
     <button
-        onClick={() => {
-            localStorage.removeItem("token");
-            window.location.href = "/";
+        onClick={() => navigate("/products")}
+        style={{
+        padding: "10px 16px",
+        border: "none",
+        borderRadius: "8px",
+        background: "#00ffcc",
+        color: "#000",
+        cursor: "pointer",
+        fontWeight: "bold"
+        }}
+    >
+        Manage Products
+    </button>
+
+    <button
+        onClick={() => window.location.reload()}
+        style={{
+            padding: "10px 16px",
+            border: "none",
+            borderRadius: "8px",
+            background: "#ffaa00",
+            color: "#000",
+            cursor: "pointer",
+            fontWeight: "bold"
         }}
         >
-        Logout
+        Refresh
         </button>
+
+    <button
+        onClick={() => {
+        localStorage.removeItem("token");
+        navigate("/");
+        }}
+        style={{
+        padding: "10px 16px",
+        border: "none",
+        borderRadius: "8px",
+        background: "#ff4d4d",
+        color: "#fff",
+        cursor: "pointer",
+        fontWeight: "bold"
+        }}
+    >
+        Logout
+    </button>
+    </div>
 
     <div style={{
         display: "flex",
