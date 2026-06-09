@@ -207,10 +207,48 @@ return (
     </div>
 
       {/* LIST */}
-      {products.map(p => (
-        <div key={p.id}>
-          <img src={p.image} width="50" alt="" />
-          <p>{p.name} - LKR {p.price}</p>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill,minmax(280px,1fr))",
+          gap: "20px",
+          marginTop: "30px"
+        }}
+      >
+        {products.map(p => (
+          <div
+            key={p.id}
+            style={{
+              background: "rgba(255,255,255,0.05)",
+              border: "1px solid rgba(0,255,204,0.1)",
+              borderRadius: "16px",
+              padding: "15px",
+              backdropFilter: "blur(10px)"
+            }}
+          >
+          <img
+            src={p.image}
+            alt={p.name}
+            style={{
+              width: "100%",
+              height: "250px",
+              objectFit: "cover",
+              borderRadius: "12px"
+            }}
+          />
+          <h3 style={{ marginTop: "15px" }}>
+            {p.name}
+          </h3>
+
+          <p
+            style={{
+              color: "#00ffcc",
+              fontWeight: "bold",
+              fontSize: "18px"
+            }}
+          >
+            LKR {p.price}
+          </p>
           <p style={{ fontSize: "12px", opacity: 0.6 }}>
             {p.description}
           </p>
@@ -223,7 +261,7 @@ return (
                     width: "12px",
                     height: "12px",
                     borderRadius: "50%",
-                    backgroundImage: `url(${c})`,
+                    background: c,
                     backgroundSize: "cover",
                     border: "1px solid #fff"
                 }}
@@ -233,6 +271,7 @@ return (
 
           <button
             style={{
+                display: "flex",
                 marginRight: "10px",
                 padding: "6px 10px",
                 borderRadius: "6px",
@@ -268,9 +307,9 @@ return (
           }}>
             Delete
           </button>
-
         </div>
       ))}
+      </div>
     </div>
   );
 }
