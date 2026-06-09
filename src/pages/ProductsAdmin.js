@@ -12,6 +12,7 @@ function ProductsAdmin() {
   const [description, setDescription] = useState("");
   const [colors, setColors] = useState("");
   const [editId, setEditId] = useState(null);
+  const [selectedColor, setSelectedColor] = useState({});
 
   useEffect(() => {
     axios.get("https://victus-production.up.railway.app/products")
@@ -227,12 +228,12 @@ return (
             }}
           >
           <img
-            src={p.image}
+            src={selectedColor[p.id] || p.image}
             alt={p.name}
             style={{
               width: "100%",
               height: "250px",
-              objectFit: "cover",
+              objectFit: "contain",
               borderRadius: "12px"
             }}
           />
@@ -259,12 +260,23 @@ return (
                 key={i}
                 src={c}
                 alt=""
+                onClick={() =>
+                  setSelectedColor({
+                    ...selectedColor,
+                    [p.id]: c
+                  })
+                }
                 style={{
                   width: "22px",
                   height: "22px",
                   borderRadius: "50%",
-                  border: "2px solid #fff",
-                  objectFit: "cover"
+                  border:
+                    selectedColor[p.id] === c
+                      ? "3px solid #00ffcc"
+                      : "2px solid #fff",
+                  objectFit: "cover",
+                  cursor: "pointer",
+                  transition: "0.2s"
                 }}
               />
             ))}
